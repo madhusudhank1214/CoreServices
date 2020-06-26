@@ -33,7 +33,7 @@ namespace CoreServices
             services.AddDbContext<demodbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("demodbConnection")));
             services.AddScoped<IPostRepository, PostRepository>();
 
-            services.AddCors(option => option.AddPolicy("MyBlogPolicy", builder => {
+            services.AddCors(option => option.AddPolicy("CoreServicePolicy", builder => {
                 builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 
             }));
@@ -46,17 +46,21 @@ namespace CoreServices
             {
                 app.UseDeveloperExceptionPage();
             }
+            if (env.IsProduction())
+            {
+                app.UseExceptionHandler("/Error");
+            }
             else
             {
-                //app.UseHsts();
+                app.UseHsts();
             }
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoint=>
             endpoint.MapControllers());
 
-            app.UseCors("MyBlogPolicy");
-            //app.UseHttpsRedirection();
+            app.UseCors("CoreServicePolicy");
+            app.UseHttpsRedirection();
             //app.UseMvc();
 
         }

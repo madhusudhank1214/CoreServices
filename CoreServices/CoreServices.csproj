@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <StartupObject>CoreServices.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Logos\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
